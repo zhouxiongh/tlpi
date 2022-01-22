@@ -17,9 +17,9 @@ allgen : ${GEN_EXE}
 #
 # The following example programs make use of signal() (instead of the
 # preferred sigaction()) to establish signal handlers.
-# By default, signal() on Linux follows the BSD semantics, establishing 
+# By default, signal() on Linux follows the BSD semantics, establishing
 # a reliable signal handler. This is because _BSD_SOURCE is enabled
-# by default in <features.h>. However, in ../Makefile.inc, we define 
+# by default in <features.h>. However, in ../Makefile.inc, we define
 # CFLAGS to include _XOPEN_SOURCE, and this has the effect of disabling
 # _BSD_SOURCE. To ensure that we get the default (BSD) semantics
 # we here explicitly define _BSD_SOURCE when compiling these programs.
@@ -38,12 +38,13 @@ nonreentrant : nonreentrant.o
 	${CC} -o $@ nonreentrant.o ${CFLAGS} ${IMPL_LDLIBS} ${LINUX_LIBCRYPT}
 
 nonatomic_uint64 : nonatomic_uint64.c
-	${CC} -m32 -o $@ $< ${CFLAGS} ${IMPL_LDLIBS}
+	#${CC} -m32 -o $@ $< ${CFLAGS} ${IMPL_LDLIBS}
+	${CC} -o $@ $< ${CFLAGS} ${IMPL_LDLIBS}
 
 sigmask_siglongjmp.o : sigmask_longjmp.c
 	${CC} -o $@ -DUSE_SIGSETJMP -c sigmask_longjmp.c ${CFLAGS}
 
-clean : 
+clean :
 	${RM} ${EXE} *.o
 
 showall :
